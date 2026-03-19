@@ -480,6 +480,7 @@ jobs:
   cicd-unit-tests-latest:
     strategy:
       fail-fast: false
+      max-parallel: ${{ contains(needs.is-not-external-contributor.outputs.selected_runner, 'ephemeral') && 1 || 256 }}
       matrix:
         include: ${{ fromJson(needs.cicd-parse-unit-tests.outputs.unit-tests) }}
     needs:
@@ -620,6 +621,7 @@ jobs:
     timeout-minutes: 60
     strategy:
       fail-fast: false
+      max-parallel: ${{ contains(needs.is-not-external-contributor.outputs.selected_runner, 'ephemeral') && 1 || 256 }}
       matrix:
         include: ${{ fromJson(needs.cicd-parse-integration-tests.outputs.integration-tests) }}
     needs:
